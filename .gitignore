@@ -1,0 +1,54 @@
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+
+# Build
+target/
+build/
+out/
+dist/
+*.class
+*.jar
+*.war
+*.zip
+*.tar.gz
+
+# Maven
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# OS
+.DS_Store
+Thumbs.db
+*.log
+
+# Testes
+test-results/
+*.html
+
+# Node (se aplicável)
+node_modules/
+package-lock.json
+npm-debug.log
+
+# Python (se aplicável)
+__pycache__/
+*.py[cod]
+*$py.class
