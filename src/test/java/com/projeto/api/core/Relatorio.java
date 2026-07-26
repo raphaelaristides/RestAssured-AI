@@ -3,61 +3,56 @@ package com.projeto.api.core;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
-import com.aventstack.extentreports.reporter.configuration.Theme;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 /**
- * Classe responsável pela geração de relatórios HTML com Extent Reports
- * Implementa padrão Singleton para garantir uma única instância
- * Suporta múltiplos testes em um único relatório HTML
+ * Classe responsável por gerar relatório HTML de testes
+ * Utiliza Extent Reports para criar relatórios visuais
+ * ThreadLocal para suportar execução paralela de testes
  */
 public class Relatorio {
 
     private static final Logger logger = LogManager.getLogger(Relatorio.class);
     private static ExtentReports extent;
     private static ThreadLocal<ExtentTest> test = new ThreadLocal<>();
-    
-    // Caminho fixo onde o relatório será salvo
-    private static final String CAMINHO_PASTA = "target/relatorios";
-    private static final String CAMINHO_ARQUIVO = CAMINHO_PASTA + "/Relatorio.html";
+
+    private static final String CAMINHO_PASTA = ConfigAPI.RELATORIO_PASTA;
+    private static final String CAMINHO_ARQUIVO = ConfigAPI.RELATORIO_ARQUIVO;
 
     /**
-     * Inicializa o Extent Reports na primeira chamada
-     * Cria a pasta de destino se não existir
+     * Inicializa o Extent Reports
+     * Chamado uma única vez ao criar o primeiro teste
      */
     private static void inicializar() {
         if (extent == null) {
+            System.out.println(">>> Inicializando Extent Report");
             logger.info(">>> Inicializando Extent Report");
-            
-            try {
-                File pasta = new File(CAMINHO_PASTA);
-                if (!pasta.exists()) {
-                    pasta.mkdirs();
-                    logger.info(">>> Pasta de relatórios criada: " + CAMINHO_PASTA);
-                }
 
+            File pasta = new File(CAMINHO_PASTA);
+            if (!pasta.exists()) {
+                boolean criado = pasta.mkdirs();
+                logger.info(">>> Pasta criada: " + criado);
+            }
+
+            try {
                 ExtentSparkReporter html = new ExtentSparkReporter(CAMINHO_ARQUIVO);
-                html.config().setTheme(Theme.DARK);
-                html.config().setDocumentTitle("Relatório de Testes - Rest Assured");
-                html.config().setReportName("Automação de Testes API");
-                html.config().setTimeStampFormat("dd/MM/yyyy hh:mm:ss a");
+                html.config().setReportName("Relatório de Testes API");
+                html.config().setDocumentTitle("Rest Assured - Testes API");
+                html.config().setTheme(com.aventstack.extentreports.reporter.configuration.Theme.DARK);
 
                 extent = new ExtentReports();
                 extent.attachReporter(html);
-                extent.setSystemInfo("Ambiente", "Teste");
-                extent.setSystemInfo("OS", System.getProperty("os.name"));
+                extent.setSystemInfo("User", System.getProperty("user.name"));
                 extent.setSystemInfo("Java Version", System.getProperty("java.version"));
-                extent.setSystemInfo("Executado em", LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
+                extent.setSystemInfo("OS", System.getProperty("os.name"));
+                extent.setSystemInfo("Base URL", ConfigAPI.BASE_URL);
 
                 logger.info(">>> Extent Report inicializado com sucesso");
             } catch (Exception e) {
                 logger.error(">>> Erro ao inicializar Extent Report: " + e.getMessage(), e);
-                throw new RuntimeException("Falha ao inicializar relatório", e);
             }
         }
     }
@@ -65,14 +60,14 @@ public class Relatorio {
     /**
      * Cria um novo teste no relatório
      * 
-     * @param nomeTeste Nome do teste a ser criado
+     * @param nome Nome do teste
      */
-    public static void criarTeste(String nomeTeste) {
-        inicializar();
+    public static void criarTeste(String nome) {
         try {
-            ExtentTest extentTest = extent.createTest(nomeTeste);
-            test.set(extentTest);
-            logger.info(">>> Teste criado: " + nomeTeste);
+            inicializar();
+            ExtentTest t = extent.createTest(nome);
+            test.set(t);
+            logger.debug(">>> Teste criado: " + nome);
         } catch (Exception e) {
             logger.error(">>> Erro ao criar teste: " + e.getMessage(), e);
         }
@@ -81,124 +76,101 @@ public class Relatorio {
     /**
      * Obtém o teste atual da thread
      * 
-     * @return ExtentTest do teste atual
+     * @return ExtentTest atual
      */
     public static ExtentTest getTest() {
-        ExtentTest extentTest = test.get();
-        if (extentTest == null) {
-            logger.warn(">>> Teste não foi inicializado. Certifique-se de chamar criarTeste() primeiro.");
-        }
-        return extentTest;
+        return test.get();
     }
 
     /**
-     * Loga uma mensagem de informação no relatório
+     * Log de informação
      * 
-     * @param mensagem Mensagem a ser logada
+     * @param msg Mensagem de log
      */
-    public static void logInfo(String mensagem) {
+    public static void logInfo(String msg) {
         try {
             inicializar();
-            ExtentTest extentTest = getTest();
-            if (extentTest != null) {
-                extentTest.info(mensagem);
+            ExtentTest t = getTest();
+            if (t != null) {
+                t.info(msg);
+            } else {
+                logger.warn(">>> Teste não inicializado, log não registrado");
             }
-            logger.info(">>> INFO: " + mensagem);
         } catch (Exception e) {
-            logger.error(">>> Erro ao logar info: " + e.getMessage(), e);
+            logger.error(">>> Erro ao fazer log info: " + e.getMessage(), e);
         }
     }
 
     /**
-     * Loga uma mensagem de sucesso (PASS) no relatório
+     * Log de sucesso
      * 
-     * @param mensagem Mensagem a ser logada
+     * @param msg Mensagem de sucesso
      */
-    public static void logPass(String mensagem) {
+    public static void logPass(String msg) {
         try {
             inicializar();
-            ExtentTest extentTest = getTest();
-            if (extentTest != null) {
-                extentTest.pass(mensagem);
+            ExtentTest t = getTest();
+            if (t != null) {
+                t.pass(msg);
+                logger.info(">>> [PASS] " + msg);
             }
-            logger.info(">>> PASS: " + mensagem);
         } catch (Exception e) {
-            logger.error(">>> Erro ao logar pass: " + e.getMessage(), e);
+            logger.error(">>> Erro ao fazer log pass: " + e.getMessage(), e);
         }
     }
 
     /**
-     * Loga uma mensagem de falha (FAIL) no relatório
+     * Log de falha
      * 
-     * @param mensagem Mensagem a ser logada
+     * @param msg Mensagem de falha
      */
-    public static void logFail(String mensagem) {
+    public static void logFail(String msg) {
         try {
             inicializar();
-            ExtentTest extentTest = getTest();
-            if (extentTest != null) {
-                extentTest.fail(mensagem);
+            ExtentTest t = getTest();
+            if (t != null) {
+                t.fail(msg);
+                logger.error(">>> [FAIL] " + msg);
             }
-            logger.error(">>> FAIL: " + mensagem);
         } catch (Exception e) {
-            logger.error(">>> Erro ao logar fail: " + e.getMessage(), e);
+            logger.error(">>> Erro ao fazer log fail: " + e.getMessage(), e);
         }
     }
 
     /**
-     * Loga uma mensagem de aviso (WARNING) no relatório
+     * Log de aviso
      * 
-     * @param mensagem Mensagem a ser logada
+     * @param msg Mensagem de aviso
      */
-    public static void logWarning(String mensagem) {
+    public static void logWarning(String msg) {
         try {
             inicializar();
-            ExtentTest extentTest = getTest();
-            if (extentTest != null) {
-                extentTest.warning(mensagem);
+            ExtentTest t = getTest();
+            if (t != null) {
+                t.warning(msg);
+                logger.warn(">>> [WARNING] " + msg);
             }
-            logger.warn(">>> WARNING: " + mensagem);
         } catch (Exception e) {
-            logger.error(">>> Erro ao logar warning: " + e.getMessage(), e);
+            logger.error(">>> Erro ao fazer log warning: " + e.getMessage(), e);
         }
     }
 
     /**
-     * Finaliza o relatório gerando o arquivo HTML
-     * Deve ser chamado ao final de todos os testes
+     * Finaliza e salva o relatório
+     * Deve ser chamado ao final da execução de todos os testes
      */
     public static void finalizar() {
         try {
             if (extent != null) {
                 extent.flush();
-                logger.info(">>> Relatório salvo em: " + CAMINHO_ARQUIVO);
-                System.out.println("\n✓ Relatório de testes gerado com sucesso em: " + CAMINHO_ARQUIVO);
+                System.out.println("\n" + "=".repeat(80));
+                System.out.println(">>> Relatório salvo em: " + CAMINHO_ARQUIVO);
+                System.out.println("=".repeat(80));
+                logger.info(">>> Relatório finalizado e salvo em: " + CAMINHO_ARQUIVO);
             }
         } catch (Exception e) {
             logger.error(">>> Erro ao finalizar relatório: " + e.getMessage(), e);
-        } finally {
-            limparThread();
         }
-    }
-
-    /**
-     * Limpa a ThreadLocal para evitar memory leaks
-     */
-    private static void limparThread() {
-        try {
-            test.remove();
-        } catch (Exception e) {
-            logger.error(">>> Erro ao limpar thread: " + e.getMessage(), e);
-        }
-    }
-
-    /**
-     * Retorna o caminho completo do arquivo de relatório
-     * 
-     * @return Caminho do arquivo HTML
-     */
-    public static String getCaminhoRelatorio() {
-        return CAMINHO_ARQUIVO;
     }
 
 }
