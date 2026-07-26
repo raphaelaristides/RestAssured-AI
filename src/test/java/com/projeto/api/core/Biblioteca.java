@@ -8,7 +8,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.rules.TestName;
 import org.junit.Rule;
 
@@ -57,10 +56,10 @@ public class Biblioteca {
 """;
 
     /**
-     * Inicializa a classe com configurações de base URI
+     * Bloco estático para inicializar RestAssured
+     * Executado uma única vez quando a classe é carregada
      */
-    @BeforeClass
-    public static void inicializarRestAssured() {
+    static {
         RestAssured.baseURI = ConfigAPI.BASE_URL;
         logger.info(">>> RestAssured inicializado com baseURI: " + ConfigAPI.BASE_URL);
     }
