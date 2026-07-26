@@ -33,27 +33,23 @@ public class Biblioteca {
     public static String token;
 
     // ========== DADOS PARA TESTES (MASSA) ==========
-    public static final String NOVO_PRODUTO_JSON = """
-{
-  "title": "Produto QA",
-  "description": "produto criado para QA",
-  "price": 22,
-  "discountPercentage": 0.4,
-  "rating": 2.22,
-  "stock": 22,
-  "brand": "produto criado qa2",
-  "category": "comida",
-  "thumbnail": "www.produtoqa.com.br"
-}
-""";
+    public static final String NOVO_PRODUTO_JSON = "{\n" +
+            "  \"title\": \"Produto QA\",\n" +
+            "  \"description\": \"produto criado para QA\",\n" +
+            "  \"price\": 22,\n" +
+            "  \"discountPercentage\": 0.4,\n" +
+            "  \"rating\": 2.22,\n" +
+            "  \"stock\": 22,\n" +
+            "  \"brand\": \"produto criado qa2\",\n" +
+            "  \"category\": \"comida\",\n" +
+            "  \"thumbnail\": \"www.produtoqa.com.br\"\n" +
+            "}";
 
-    public static final String NOVO_POST_JSON = """
-{
-  "title": "Post de Teste",
-  "body": "Este é um post de teste para validação",
-  "userId": 1
-}
-""";
+    public static final String NOVO_POST_JSON = "{\n" +
+            "  \"title\": \"Post de Teste\",\n" +
+            "  \"body\": \"Este é um post de teste para validação\",\n" +
+            "  \"userId\": 1\n" +
+            "}";
 
     /**
      * Bloco estático para inicializar RestAssured
