@@ -5,7 +5,6 @@ import com.projeto.api.core.ConfigAPI;
 import io.restassured.response.Response;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import java.util.Map;
 
 /**
