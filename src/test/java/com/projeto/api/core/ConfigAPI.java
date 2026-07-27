@@ -35,4 +35,11 @@ public class ConfigAPI {
     public static final String RELATORIO_PASTA = "target/relatorios";
     public static final String RELATORIO_ARQUIVO = "target/relatorios/Relatorio.html";
 
+    // ========== STATUS CODES ESPERADOS ==========
+    public static final int STATUS_SUCCESS = 200;
+    public static final int STATUS_CREATED = 201;
+    public static final int STATUS_BAD_REQUEST = 400;
+    public static final int STATUS_UNAUTHORIZED = 401;
+    public static final int STATUS_FORBIDDEN = 403;
+    public static final int STATUS_NOT_FOUND = 404;
 }

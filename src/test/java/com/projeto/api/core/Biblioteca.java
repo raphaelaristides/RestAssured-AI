@@ -64,22 +64,32 @@ public class Biblioteca {
      * Executado antes de cada teste
      * Cria registro no relatório
      */
-    @Before
-    public void iniciarTeste() {
-        String nomeTeste = testName.getMethodName();
-        System.out.println("\n" + "=".repeat(80));
-        System.out.println(">>> Iniciando teste: " + nomeTeste);
-        System.out.println("=".repeat(80));
-        Relatorio.criarTeste(nomeTeste);
-    }
+   @Before
+public void iniciarTeste() {
+
+    String nome = testName.getMethodName();
+
+    System.out.println();
+
+    System.out.println("================================================================================");
+    System.out.println(">>> Iniciando teste: " + nome);
+    System.out.println("================================================================================");
+
+    Relatorio.criarTeste(nome);
+
+}
 
     /**
      * Executado após cada teste
      */
-    @After
-    public void finalizarTeste() {
-        logger.info(">>> Teste finalizado: " + testName.getMethodName());
-    }
+@After
+public void finalizarTeste() {
+
+    logger.info(">>> Teste finalizado: " + testName.getMethodName());
+
+    Relatorio.finalizar();
+
+}
 
     // ========== MÉTODOS DE REQUISIÇÃO HTTP ==========
 

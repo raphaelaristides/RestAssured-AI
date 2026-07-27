@@ -1,11 +1,10 @@
 package com.projeto.api.core;
-
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+import com.aventstack.extentreports.reporter.configuration.Theme;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.io.File;
 
 /**
@@ -18,7 +17,6 @@ public class Relatorio {
     private static final Logger logger = LogManager.getLogger(Relatorio.class);
     private static ExtentReports extent;
     private static ThreadLocal<ExtentTest> test = new ThreadLocal<>();
-
     private static final String CAMINHO_PASTA = ConfigAPI.RELATORIO_PASTA;
     private static final String CAMINHO_ARQUIVO = ConfigAPI.RELATORIO_ARQUIVO;
 
@@ -26,52 +24,47 @@ public class Relatorio {
      * Inicializa o Extent Reports
      * Chamado uma única vez ao criar o primeiro teste
      */
-    private static void inicializar() {
-        if (extent == null) {
-            System.out.println(">>> Inicializando Extent Report");
-            logger.info(">>> Inicializando Extent Report");
+    public static synchronized void inicializar() {
 
-            File pasta = new File(CAMINHO_PASTA);
-            if (!pasta.exists()) {
-                boolean criado = pasta.mkdirs();
-                logger.info(">>> Pasta criada: " + criado);
-            }
-
-            try {
-                ExtentSparkReporter html = new ExtentSparkReporter(CAMINHO_ARQUIVO);
-                html.config().setReportName("Relatório de Testes API");
-                html.config().setDocumentTitle("Rest Assured - Testes API");
-                html.config().setTheme(com.aventstack.extentreports.reporter.configuration.Theme.DARK);
-
-                extent = new ExtentReports();
-                extent.attachReporter(html);
-                extent.setSystemInfo("User", System.getProperty("user.name"));
-                extent.setSystemInfo("Java Version", System.getProperty("java.version"));
-                extent.setSystemInfo("OS", System.getProperty("os.name"));
-                extent.setSystemInfo("Base URL", ConfigAPI.BASE_URL);
-
-                logger.info(">>> Extent Report inicializado com sucesso");
-            } catch (Exception e) {
-                logger.error(">>> Erro ao inicializar Extent Report: " + e.getMessage(), e);
-            }
-        }
+    if (extent != null) {
+        return;
     }
+
+    logger.info(">>> Inicializando Extent Report");
+
+    File pasta = new File(CAMINHO_PASTA);
+
+    if (!pasta.exists()) {
+        pasta.mkdirs();
+    }
+
+    ExtentSparkReporter spark =
+            new ExtentSparkReporter(CAMINHO_ARQUIVO);
+
+    spark.config().setDocumentTitle("Automação API");
+    spark.config().setReportName("Resultados da Execução");
+    spark.config().setTheme(Theme.DARK);
+
+    extent = new ExtentReports();
+    extent.attachReporter(spark);
+
+    extent.setSystemInfo("Java", System.getProperty("java.version"));
+    extent.setSystemInfo("OS", System.getProperty("os.name"));
+    extent.setSystemInfo("Usuário", System.getProperty("user.name"));
+
+    logger.info(">>> Extent inicializado.");
+}
 
     /**
      * Cria um novo teste no relatório
      * 
      * @param nome Nome do teste
      */
-    public static void criarTeste(String nome) {
-        try {
-            inicializar();
-            ExtentTest t = extent.createTest(nome);
-            test.set(t);
-            logger.debug(">>> Teste criado: " + nome);
-        } catch (Exception e) {
-            logger.error(">>> Erro ao criar teste: " + e.getMessage(), e);
-        }
-    }
+    public static synchronized void criarTeste(String nome) {
+    inicializar();
+    ExtentTest extentTest = extent.createTest(nome);
+    test.set(extentTest);
+}
 
     /**
      * Obtém o teste atual da thread
@@ -159,18 +152,17 @@ public class Relatorio {
      * Finaliza e salva o relatório
      * Deve ser chamado ao final da execução de todos os testes
      */
-    public static void finalizar() {
-        try {
-            if (extent != null) {
-                extent.flush();
-                System.out.println("\n" + "=".repeat(80));
-                System.out.println(">>> Relatório salvo em: " + CAMINHO_ARQUIVO);
-                System.out.println("=".repeat(80));
-                logger.info(">>> Relatório finalizado e salvo em: " + CAMINHO_ARQUIVO);
-            }
-        } catch (Exception e) {
-            logger.error(">>> Erro ao finalizar relatório: " + e.getMessage(), e);
+    public static synchronized void finalizar() {
+    try {
+        if (extent != null) {
+            logger.info(">>> Gravando relatório...");
+            extent.flush();
+            logger.info(">>> Relatório salvo.");
         }
+    } catch (Exception ex) {
+        logger.error(ex.getMessage(), ex);
     }
+
+}
 
 }

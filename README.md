@@ -17,30 +17,26 @@ Projeto completo de automação de testes API utilizando **Rest Assured**, **JUn
 RestAssured-AI/
 ├── pom.xml                                    # Dependências Maven
 ├── README.md                                  # Este arquivo
-├── GUIA_DE_BOAS_PRATICAS.md                  # Documentação detalhada
 ├── src/
 │   └── test/
 │       ├── java/
-│       │   └── com/projeto/api/
-│       │       ├── core/
-│       │       │   ├── ConfigAPI.java        # Configurações centralizadas
-│       │       │   ├── Relatorio.java        # Extent Reports
-│       │       │   └── Biblioteca.java       # Métodos reutilizáveis
-│       │       ├── testes/
-│       │       │   ├── CT001ValidarStatus200.java
-│       │       │   ├── CT002ValidarCredenciais.java
-│       │       │   ├── CT003ValidarConsultaProdutoAutenticado.java
-│       │       │   ├── CT004ValidarInclusaoProduto.java
-│       │       │   ├── CT005ValidarErroAutenticacao.java
-│       │       │   ├── CT006ValidarListaProdutos.java
-│       │       │   ├── CT007ValidarProdutoPorID.java
-│       │       │   ├── CT008ValidarAtualizacaoProduto.java
-│       │       │   ├── CT009ValidarExclusaoProduto.java
-│       │       │   └── CT010ValidarContentType.java
-│       │       └── listeners/
-│       │           └── TestListener.java     # Listener para eventos de testes
-│       └── resources/
-│           └── log4j2.xml                    # Configuração de logging
+│          └── com/projeto/api/
+│              ├── core/
+│              │   ├── ConfigAPI.java        # Configurações centralizadas
+│              │   ├── Relatorio.java        # Extent Reports
+│              │   └── Biblioteca.java       # Métodos reutilizáveis
+│              ├── testes/
+│                 ├── CT001ValidarStatus200.java
+│                 ├── CT002ValidarCredenciais.java
+│                 ├── CT003ValidarConsultaProdutoAutenticado.java
+│                 ├── CT004ValidarInclusaoProduto.java
+│                 ├── CT005ValidarErroAutenticacao.java
+│                 ├── CT006ValidarListaProdutos.java
+│                 ├── CT007ValidarProdutoPorID.java
+│                 ├── CT008ValidarAtualizacaoProduto.java
+│                 ├── CT009ValidarExclusaoProduto.java
+│                 └── CT010ValidarContentType.java
+│              
 └── target/
     ├── relatorios/
     │   └── Relatorio.html                    # Relatório gerado
@@ -83,7 +79,7 @@ mvn test -Dtest=CT001ValidarStatus200
 
 ### Executar múltiplos testes
 ```bash
-mvn test -Dtest=CT001ValidarStatus200,CT002ValidarCredenciais
+mvn test "-Dtest=CT001ValidarStatus200,CT002ValidarCredenciais"
 ```
 
 ## 📊 Relatório de Testes
@@ -95,13 +91,13 @@ target/relatorios/Relatorio.html
 ```
 
 O relatório inclui:
-- ✅ Status de todos os testes (Pass/Fail)
+- ✅ Status de todos os testes (Pass/Fail) - Todos os testes centralizados em um só HTML.
 - 📊 Gráficos de sucesso e eventos
 - 📝 Logs detalhados de cada teste
 - ⏱️ Tempo de execução
 - 📈 Dashboard com estatísticas
 
-## 📝 Cenários de Teste
+## 📝 Cenários de Teste - Básicos apenas para estudos e entendimento do Projeto e suas bibliotecas.
 
 ### CT001 - Validar Status 200
 Valida se a requisição GET retorna status 200
@@ -194,7 +190,6 @@ String valor = capturaDados(response, "campo.aninhado");
 - Teste manualmente com curl ou Postman
 
 ### Logs não aparecem
-- Verifique `log4j2.xml` em `src/test/resources/`
 - Verifique permissões em `target/logs/`
 
 ## 📖 Padrões Utilizados
@@ -211,20 +206,8 @@ THEN:  Validação dos resultados
 - **Act**: Execução da ação
 - **Assert**: Validação dos resultados
 
-## 🔐 Segurança
-
-- Evite hardcoding de senhas; use variáveis de ambiente
-- Não commitar credenciais reais no repositório
-- Use tokens com tempo de expiração
-
-## 📞 Suporte
-
-Para dúvidas ou sugestões, abra uma issue no repositório.
-
 ## 📄 Licença
 
-Este projeto é fornecido como está para fins educacionais e de automação de testes.
+Este projeto foi gerado através de IA Generativa e fornecido como está para fins educacionais e de automação de testes.
 
 ---
-
-**Desenvolvido com ❤️ usando Rest Assured + JUnit + Extent Reports**
