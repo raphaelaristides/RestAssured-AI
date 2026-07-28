@@ -1,4 +1,4 @@
-####### EXEMPLO DE IMPLEMENTAÇÃO NOVA US PARA AUTOMATIZAR 
+@@ EXEMPLO DE IMPLEMENTAÇÃO NOVA US PARA AUTOMATIZAR @@
 
 Imagine que você já possui este escopo de projeto abaixo (ou o seu projeto):
 
@@ -40,7 +40,6 @@ Agora veja como utilizar cada prompt.
 ##### ETAPA 1 — Prompt02
 
 Primeiro eu não peço código.
-
 Eu peço para o Copilot entender o projeto.
 
 Exemplo:
@@ -48,6 +47,7 @@ Exemplo:
 Utilize o Prompt02.
 Analise a arquitetura completa deste projeto.
 Considere a User Story abaixo.
+
 Identifique:
 
 quais componentes existentes podem ser reutilizados;
@@ -84,9 +84,7 @@ Veja que ele pensou antes de programar.
 
 ##### ETAPA 2 — Prompt03
 
-Agora que sei como vou desenvolver...
-
-Peça somente os cenários.
+Agora que sei como vou desenvolver, peça somente os cenários.
 
 Exemplo:
 
@@ -150,7 +148,7 @@ Agora sim, Você envia o Prompt04 junto com o cenário escolhido.
 Exemplo:
 
 Utilize o Prompt04.
-Implemente somente o CT001.
+Implemente somente o CT001 ( todos os cenários )
 Reutilize integralmente a arquitetura existente.
 Caso alguma classe já exista, reutilize-a.
 Crie apenas componentes inexistentes.
@@ -172,5 +170,3 @@ Logger
 Utils
 Helpers
 EnvironmentConfig
-
-Porque tudo isso já existe.
