@@ -128,9 +128,6 @@ CT008
 Ordenação crescente
 200
 ---
-CT009
-Ordenação decrescente
-200
 ...
 
 Agora você tem uma especificação de testes, ainda sem escrever uma linha de código.
