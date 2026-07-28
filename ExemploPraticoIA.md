@@ -37,50 +37,29 @@ Quando token for inválido retornar 401
 
 Agora veja como utilizar cada prompt.
 
-##### ETAPA 1 — Prompt02
-
-Primeiro eu não peço código.
-Eu peço para o Copilot entender o projeto.
-
-Exemplo:
 
 Utilize o Prompt02.
-Analise a arquitetura completa deste projeto.
+Analise toda a estrutura do framework existente.
+Realize um inventário completo do projeto antes de qualquer implementação.
 Considere a User Story abaixo.
 
 Identifique:
 
-quais componentes existentes podem ser reutilizados;
-quais classes já atendem parcialmente à demanda;
-quais novas classes precisarão ser criadas;
-quais Builders, Requests, Services, Validators e Models já existem;
-quais dependências existem entre os componentes.
+• Requests existentes;
+• Services existentes;
+• Builders existentes;
+• Validators existentes;
+• Models existentes;
+• Helpers e Utils disponíveis;
+• Factories existentes;
+• Configurações reutilizáveis (Environment, Authentication, BaseTest, RequestSpecification, etc.);
+• Componentes que podem ser reutilizados;
+• Componentes que precisarão ser alterados;
+• Componentes realmente novos que precisarão ser criados;
+• Dependências entre os componentes;
+• Impactos arquiteturais da nova funcionalidade.
 
-Não gere código.
-Apenas faça a análise técnica.
-O que ele responde?
-
-Algo parecido com:
-
-Já existe:
-
-AuthenticationService
-RequestSpecificationFactory
-BaseRequest
-ResponseValidator
-JsonUtils
-Logger
-
-Será necessário criar:
-
-OrderRequest
-OrderService
-OrderValidator
-OrderModel
-OrderBuilder
-OrderTest
-
-Veja que ele pensou antes de programar.
+Não gere código,apenas realize a análise técnica e proponha uma estratégia de implementação.
 
 ##### ETAPA 2 — Prompt03
 
