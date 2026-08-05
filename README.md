@@ -71,6 +71,7 @@ src
 └── test
     └── java
         └── com.projeto.api
+```
 
 
 Toda a inteligência utilizada pelos Agents está centralizada na pasta .github.
@@ -86,12 +87,18 @@ Especialista em arquitetura e governança do framework.
 
 Responsabilidades: 
 • analisar a estrutura do projeto;
+
 • identificar componentes reutilizáveis;
+
 • validar impactos arquiteturais;
+
 • definir a estratégia de implementação;
+
 • revisar a implementação final.
-• Comando utilizado
-• Analise esta API:
+
+## 📄Comando utilizado: 
+
+Analise esta API: https://dummyjson.com/docs/products
 
 
 ##  🔍 QA Cenários
@@ -99,15 +106,24 @@ Responsabilidades:
 Especialista em análise funcional.
 
 Responsabilidades:
+
 • interpretar documentações REST;
+
 • interpretar Swagger e OpenAPI;
+
 • interpretar User Stories;
+
 • gerar cenários positivos;
+
 • gerar cenários negativos;
+
 • gerar casos de borda;
+
 • definir critérios de aceite.
-• Comando utilizado
-• Gere os cenários desta documentação:
+
+## 📄Comando utilizado
+
+Gere os cenários desta documentação: https://dummyjson.com/docs/products
 
 
 ##  👨‍💻 Desenvolvedor
@@ -115,15 +131,22 @@ Responsabilidades:
 Especialista em implementação.
 
 Responsabilidades:
+
 • reutilizar componentes existentes;
+
 • implementar novos cenários;
+
 • evitar duplicidade de código;
+
 • preservar a arquitetura do framework;
+
 • seguir os padrões definidos no projeto.
-• Comando utilizado
-• Implemente os cenários aprovados.
 
+## 📄Comando utilizado:
 
+Implemente os cenários aprovados.
+
+```
 🔄 Fluxo de trabalho
 Documentação da API
         │
@@ -145,7 +168,7 @@ Implementação
         ▼
 🧠 Mestre
 Code Review
-
+```
 
 🚀 Como utilizar
 
@@ -154,23 +177,25 @@ Depois que os Custom Agents estiverem configurados no GitHub Copilot, basta sele
 1️⃣ Análise arquitetural
 
 Selecione o Agent Mestre:
-Analise esta API:
-https://dummyjson.com/docs/products
+
+Analise esta API: https://dummyjson.com/docs/products
 
 2️⃣ Geração dos cenários
 
 Selecione o Agent QA Cenários:
-Gere os cenários desta documentação:
-https://dummyjson.com/docs/products
+
+Gere os cenários desta documentação: https://dummyjson.com/docs/products
 
 3️⃣ Implementação
 
 Selecione o Agent Desenvolvedor:
+
 Implemente os cenários aprovados.
 
 4️⃣ Revisão
 
 Selecione o Agent Mestre:
+
 Revise a implementação realizada.
 
 Toda a complexidade está encapsulada nos arquivos .agent.md, .instructions.md e .prompts.
@@ -178,12 +203,19 @@ Toda a complexidade está encapsulada nos arquivos .agent.md, .instructions.md e
 ✨ Principais benefícios
 
 ✅ Não é necessário anexar prompts a cada conversa.
+
 ✅ Os Agents já conhecem a arquitetura do projeto.
+
 ✅ Reutilização de componentes existentes.
+
 ✅ Redução de duplicidade de código.
+
 ✅ Redução de duplicidade de cenários de testes.
+
 ✅ Maior padronização da automação.
+
 ✅ Fluxo de desenvolvimento mais simples.
+
 ✅ Maior escalabilidade para novas APIs e User Stories.
 
 
@@ -196,18 +228,29 @@ Toda a complexidade está encapsulada nos arquivos .agent.md, .instructions.md e
 5. Abra o Chat do Copilot, selecione o Agent desejado e utilize os comandos apresentados neste README.
 
 
-🛠 Tecnologias
-Java 11+
-Maven
-Rest Assured
-JUnit
-Log4j
-Extent Reports
-GitHub Copilot
-GitHub Copilot Custom Agents
-Visual Studio Code
+# 🛠 Tecnologias
+
+➡️ Java 11+
+
+➡️ Maven
+
+➡️ Rest Assured
+
+➡️ JUnit
+
+➡️ Log4j
+
+➡️ Extent Reports
+
+➡️ GitHub Copilot
+
+➡️ GitHub Copilot Custom Agents
+
+➡️ Visual Studio Code
 
 
-👨‍💻 Autor - Victor Aristides
+
+
+# 👨‍💻 Autor - Victor Aristides
 💼 LinkedIn: https://www.linkedin.com/in/victor-aristides-b435821b3/
 💻 GitHub: https://github.com/raphaelaristides
