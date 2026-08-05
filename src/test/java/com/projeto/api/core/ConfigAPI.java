@@ -18,6 +18,8 @@ public class ConfigAPI {
     public static final String ENDPOINT_USERS = "/users";
     public static final String ENDPOINT_PRODUCTS = "/products";
     public static final String ENDPOINT_POSTS = "/posts";
+    public static final String ENDPOINT_POSTS_ADD = "/posts/add";
+    public static final String ENDPOINT_POSTS_SEARCH = "/posts/search";
     public static final String ENDPOINT_AUTH_LOGIN = "/auth/login";
     public static final String ENDPOINT_AUTH_PRODUCTS = "/auth/products";
     public static final String ENDPOINT_PRODUCTS_ADD = "/products/add";
@@ -33,7 +35,7 @@ public class ConfigAPI {
 
     // ========== RELATÓRIO ==========
     public static final String RELATORIO_PASTA = "target/relatorios";
-    public static final String RELATORIO_ARQUIVO = "target/relatorios/Relatorio.html";
+    public static final String RELATORIO_ARQUIVO = "target/relatorios/APITestRelatorio.html";
 
     // ========== STATUS CODES ESPERADOS ==========
     public static final int STATUS_SUCCESS = 200;

@@ -7,6 +7,7 @@ import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.rules.TestName;
 import org.junit.Rule;
@@ -50,6 +51,9 @@ public class Biblioteca {
             "  \"body\": \"Este é um post de teste para validação\",\n" +
             "  \"userId\": 1\n" +
             "}";
+
+    public static String campoCategoriaString = "category";
+    public static String campoTituloString = "title";
 
     /**
      * Bloco estático para inicializar RestAssured
@@ -173,11 +177,9 @@ public void finalizarTeste() {
                     .given()
                     .contentType(ContentType.JSON)
                     .body(body)
-                    .log().all()
                     .when()
                     .post(endpointPath)
                     .then()
-                    .log().body()
                     .extract().response();
 
             Relatorio.logInfo("Status: " + response.getStatusCode());
@@ -206,12 +208,11 @@ public void finalizarTeste() {
                     .given()
                     .contentType(ContentType.JSON)
                     .body(body)
-                    .log().all()
-                    .when()
+                            .when()
                     .put(endpointPath)
                     .then()
-                    .log().body()
-                    .extract().response();
+                    .extract()
+                    .response();
 
             Relatorio.logInfo("Status: " + response.getStatusCode());
             logger.info(">>> Resposta PUT: " + response.asString());
@@ -220,6 +221,39 @@ public void finalizarTeste() {
         } catch (Exception e) {
             logger.error(">>> Erro ao executar PUT: " + e.getMessage(), e);
             Relatorio.logFail("Erro ao executar PUT: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    /**
+     * Realiza uma requisição PATCH com corpo
+     * 
+     * @param body Corpo da requisição
+     * @param endpointPath Caminho do endpoint
+     * @return Response da requisição
+     */
+    public static Response fazerRequisicaoPatchBody(Object body, String endpointPath) {
+        try {
+            Relatorio.logInfo("PATCH com Body → " + endpointPath);
+            logger.debug(">>> Body: " + body);
+
+            Response response = RestAssured
+                    .given()
+                    .contentType(ContentType.JSON)
+                    .body(body)
+                    .when()
+                    .patch(endpointPath)
+                    .then()
+                    .extract()
+                    .response();
+
+            Relatorio.logInfo("Status: " + response.getStatusCode());
+            Relatorio.logInfo("Resposta: " + response.asString());
+            
+            return response;
+        } catch (Exception e) {
+            logger.error(">>> Erro ao executar PATCH: " + e.getMessage(), e);
+            Relatorio.logFail("Erro ao executar PATCH: " + e.getMessage());
             throw e;
         }
     }
@@ -320,7 +354,7 @@ public void finalizarTeste() {
                 logger.info(">>> Validação OK: " + descricao);
             } else {
                 Relatorio.logFail(descricao + " → FALHOU! Esperado: " + valorEsperado + " | Obtido: " + valorObtido);
-                logger.error(">>> Validação FALHOU: " + descricao);
+                Assert.fail(">>> Validação FALHOU: " + descricao);
             }
         } catch (Exception e) {
             logger.error(">>> Erro ao validar: " + e.getMessage(), e);
@@ -472,6 +506,23 @@ public void finalizarTeste() {
         produto.put("category", "comida");
         logger.debug(">>> Corpo de produto criado: " + produto);
         return produto;
+    }
+
+    /**
+     * Cria um mapa com dados de um post
+     * 
+     * @param title Título do post
+     * @param body Corpo do post
+     * @param userId ID do usuário
+     * @return Map com dados do post
+     */
+    public static Map<String, Object> criarCorpoPost(String title, String body, int userId) {
+        Map<String, Object> post = new HashMap<>();
+        post.put("title", title);
+        post.put("body", body);
+        post.put("userId", userId);
+        logger.debug(">>> Corpo de post criado: " + post);
+        return post;
     }
 
     /**

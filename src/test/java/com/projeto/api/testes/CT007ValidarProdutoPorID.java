@@ -27,11 +27,11 @@ public class CT007ValidarProdutoPorID extends Biblioteca {
         validados("ID do produto", 1, idRetornado, "equals");
         
         // Valida se contém os campos essenciais
-        String titulo = capturaDados(response, "title");
-        String categoria = capturaDados(response, "category");
-        
-        validados("Título do produto existe", true, titulo != null && !titulo.isEmpty(), "equals");
-        validados("Categoria do produto existe", true, categoria != null && !categoria.isEmpty(), "equals");
+        String titulo = capturaDados(response, Biblioteca.campoTituloString);
+        String categoria = capturaDados(response, Biblioteca.campoCategoriaString);
+
+        validados("Campo: " + Biblioteca.campoTituloString + " do produto Validado no Json", true, titulo != null && !titulo.isEmpty(), "equals");
+        validados("Campo: " + Biblioteca.campoCategoriaString + " do produto Validado no Json", true, categoria != null && !categoria.isEmpty(), "equals");
     }
 
 }
