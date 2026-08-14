@@ -7,12 +7,6 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
-
         stage('Verificar ambiente') {
             steps {
                 bat 'java -version'
@@ -31,7 +25,6 @@ pipeline {
     post {
 
         always {
-
             junit testResults: 'target/surefire-reports/*.xml',
                   allowEmptyResults: true
 
