@@ -23,7 +23,7 @@ Como exemplo, foi utilizada a documentação da API **Products** da DummyJSON.
 
 <img width="269" height="209" alt="Cenários gerados pelos Agents" src="https://github.com/user-attachments/assets/99d4c201-911e-480b-be3b-adf9f5b7a578" />
 
-> ❗ **Observação**
+> ❗ ***Observação***
 >
 > O objetivo deste repositório é demonstrar a utilização da IA aplicada à automação de testes.  
 > A API DummyJSON foi utilizada apenas como base para demonstrar o funcionamento dos Agents.
