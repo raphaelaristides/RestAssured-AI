@@ -5,6 +5,10 @@ pipeline {
         maven 'Maven3'
     }
 
+    triggers {
+        pollSCM('H/2 * * * *')
+    }
+
     stages {
 
         stage('Verificar ambiente') {
